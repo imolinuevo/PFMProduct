@@ -23,7 +23,7 @@ class Main extends CI_Controller {
         if ($this->session->userdata('logged') == 'true') {
             $this->load->view('home_view');
         } else {
-            $this->form_validation->set_rules('username', 'Username', 'required');
+            $this->form_validation->set_rules('email', 'Email', 'required');
             $this->form_validation->set_rules('password', 'Password', 'required');
             if ($this->form_validation->run() == FALSE) {
                 $this->load->view('login_form');
