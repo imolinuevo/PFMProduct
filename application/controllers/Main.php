@@ -21,16 +21,32 @@ class Main extends CI_Controller {
 
     public function login() {
         if ($this->session->userdata('logged') == 'true') {
-            $this->load->view('home_view');
+            $data['user_email'] = $this->config->item('user_email');
+            $this->load->view('home_view', $data);
         } else {
             $this->form_validation->set_rules('email', 'Email', 'required');
             $this->form_validation->set_rules('password', 'Password', 'required');
             if ($this->form_validation->run() == FALSE) {
                 $this->load->view('login_form');
-            } else {
+            } else if($this->isValidUser($this->input->post('email'), $this->input->post('password'))) {
                 $this->session->set_userdata('logged', 'true');
-                $this->load->view('home_view');
+                $data['user_email'] = $this->config->item('user_email');
+                $this->load->view('home_view', $data);
+            } else {
+                $this->load->view('login_form');
             }
+        }
+    }
+    
+    private function isValidUser($user_email, $user_password) {
+        if(!empty($this->config->item('user_email')) && !empty($this->config->item('user_password'))){
+            if(($this->config->item('user_email') == $user_email) && ($this->config->item('user_password') == $user_password)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
         }
     }
     
@@ -45,7 +61,8 @@ class Main extends CI_Controller {
     
     public function home() {
         if ($this->session->userdata('logged') == 'true') {
-            $this->load->view('home_view');
+            $data['user_email'] = $this->config->item('user_email');
+            $this->load->view('home_view', $data);
         } else {
             $this->load->view('login_form');
         }
