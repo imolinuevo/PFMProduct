@@ -135,39 +135,41 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="content-wrapper">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
-                    <h1>Home</h1>
+                    <h1>Record</h1>
                 </section>
                 <!-- Main content -->
                 <section class="content">
                     <div class="row">
-                        <div class="col-xs-12">
-                            <div class="box">
-                                <div class="box-header">
-                                    <h3 class="box-title">Uploaded files</h3>
+                        <!-- left column -->
+                        <div class="col-md-6">
+                            <!-- general form elements -->
+                            <div class="box box-primary">
+                                <div class="box-header with-border">
+                                    <h3 class="box-title">Upload file</h3>
                                 </div><!-- /.box-header -->
-                                <div class="box-body">
-                                    <table id="example2" class="table table-bordered table-hover">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Extension</th>
-                                                <th>Size</th>
-                                                <th>Date added</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><a href="#">Perf</a></td>
-                                                <td>image/jpg</td>
-                                                <td>6.87KB</td>
-                                                <td>04/29/2016</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div><!-- /.box-body -->
+                                <!-- form start -->
+                                <form role="form">
+                                    <div class="box-body">
+                                        <div class="form-group">
+                                            <label for="fileName">File name</label>
+                                            <input type="text" class="form-control" id="fileName" placeholder="Insert a name" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="pinCode">Secret pin code</label>
+                                            <input type="numer" class="form-control" id="pinCode" placeholder="4 digit pin code" required pattern="\d{4}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputFile">File input</label>
+                                            <input type="file" id="exampleInputFile" required>
+                                        </div>
+                                    </div><!-- /.box-body -->
+                                    <div class="box-footer">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </form>
                             </div><!-- /.box -->
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
+                        </div><!--/.col (left) -->
+                    </div>   <!-- /.row -->
                 </section><!-- /.content -->
             </div><!-- /.content-wrapper -->
             <footer class="main-footer">
