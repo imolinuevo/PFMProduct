@@ -22,18 +22,18 @@ class Main extends CI_Controller {
     public function login() {
         if ($this->session->userdata('logged') == 'true') {
             $data['user_email'] = $this->config->item('user_email');
-            $this->load->view('home_view', $data);
+            $this->load->view('main/home_view', $data);
         } else {
             $this->form_validation->set_rules('email', 'Email', 'required');
             $this->form_validation->set_rules('password', 'Password', 'required');
             if ($this->form_validation->run() == FALSE) {
-                $this->load->view('login_form');
+                $this->load->view('main/login_form');
             } else if($this->isValidUser($this->input->post('email'), $this->input->post('password'))) {
                 $this->session->set_userdata('logged', 'true');
                 $data['user_email'] = $this->config->item('user_email');
-                $this->load->view('home_view', $data);
+                $this->load->view('main/home_view', $data);
             } else {
-                $this->load->view('login_form');
+                $this->load->view('main/login_form');
             }
         }
     }
@@ -53,19 +53,27 @@ class Main extends CI_Controller {
     public function logout() {
         if ($this->session->userdata('logged') == 'true') {
             $this->session->set_userdata('logged', 'false');
-            $this->load->view('login_form');
+            $this->load->view('main/login_form');
         } else { 
-            $this->load->view('login_form');
+            $this->load->view('main/login_form');
         }
     }
     
     public function home() {
         if ($this->session->userdata('logged') == 'true') {
             $data['user_email'] = $this->config->item('user_email');
-            $this->load->view('home_view', $data);
+            $this->load->view('main/home_view', $data);
         } else {
-            $this->load->view('login_form');
+            $this->load->view('main/login_form');
         }
     }
 
+    public function showSearch() {
+        if ($this->session->userdata('logged') == 'true') {
+            $data['user_email'] = $this->config->item('user_email');
+            $this->load->view('main/search_view', $data);
+        } else {
+            $this->load->view('main/login_form');
+        }
+    }
 }
