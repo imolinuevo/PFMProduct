@@ -40,7 +40,7 @@ class Main extends CI_Controller {
     
     private function isValidUser($user_email, $user_password) {
         if(!empty($this->config->item('user_email')) && !empty($this->config->item('user_password'))){
-            if(($this->config->item('user_email') == $user_email) && ($this->config->item('user_password') == $user_password)) {
+            if(($this->config->item('user_email') == $user_email) && ($this->config->item('user_password') == md5($user_password))) {
                 return true;
             } else {
                 return false;
