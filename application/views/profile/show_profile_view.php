@@ -34,7 +34,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             <header class="main-header">
                 <!-- Logo -->
-                <a href="#" class="logo">
+                <a href="<?php echo site_url('main/home'); ?>" class="logo">
                     <!-- mini logo for sidebar mini 50x50 pixels -->
                     <span class="logo-mini"><b>N</b>C</span>
                     <!-- logo for regular state and mobile devices -->
@@ -68,10 +68,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <!-- Menu Footer-->
                                     <li class="user-footer">
                                         <div class="pull-left">
-                                            <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                            <a href="<?php echo site_url('profile/showProfile'); ?>" class="btn btn-default btn-flat">Profile</a>
                                         </div>
                                         <div class="pull-right">
-                                            <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                            <a href="<?php echo site_url('main/logout'); ?>" class="btn btn-default btn-flat">Sign out</a>
                                         </div>
                                     </li>
                                 </ul>
@@ -108,22 +108,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <ul class="sidebar-menu">
                         <li class="header">MAIN NAVIGATION</li>
                         <li>
-                            <a href="#">
+                            <a href="<?php echo site_url('main/home'); ?>">
                                 <i class="fa fa-database"></i><span>Home</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="<?php echo site_url('record/showCreateRecord'); ?>">
                                 <i class="fa fa-cloud-upload"></i><span>Upload file</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="<?php echo site_url('profile/showProfile'); ?>">
                                 <i class="fa fa-user"></i><span>Profile</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="<?php echo site_url('main/logout'); ?>">
                                 <i class="fa fa-sign-out"></i><span>Sign out</span>
                             </a>
                         </li>
@@ -154,7 +154,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             <b>Saved files</b> <a class="pull-right">1,322</a>
                                         </li>
                                     </ul>
-                                    <a href="#" class="btn btn-primary btn-block"><b>Upload more files</b></a>
+                                    <a href="<?php echo site_url('record/showCreateRecord'); ?>" class="btn btn-primary btn-block"><b>Upload more files</b></a>
                                 </div><!-- /.box-body -->
                             </div><!-- /.box -->
                         </div><!-- /.col -->
@@ -178,7 +178,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <td><a href="#">Perf</a></td>
+                                                        <td><a href="<?php echo site_url('record/showRecord'); ?>">Perf</a></td>
                                                         <td>image/jpg</td>
                                                         <td>6.87KB</td>
                                                         <td>04/29/2016</td>
