@@ -52,6 +52,16 @@ class Record {
      * @Column(type="text", nullable=false)
      */
     protected $result;
+    
+    public function __construct($name, $extension, $size, $date_added, $hash, $vector, $result) {
+        $this->name = $name;
+        $this->extension = $extension;
+        $this->size = $size;
+        $this->date_added = $date_added;
+        $this->hash = $hash;
+        $this->vector = $vector;
+        $this->result = $result;
+    }
 
     public function setName($name) {
         $this->name = $name;

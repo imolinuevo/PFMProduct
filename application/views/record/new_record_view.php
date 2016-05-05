@@ -148,25 +148,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <h3 class="box-title">Upload file</h3>
                                 </div><!-- /.box-header -->
                                 <!-- form start -->
-                                <form role="form">
-                                    <div class="box-body">
-                                        <div class="form-group">
-                                            <label for="fileName">File name</label>
-                                            <input type="text" class="form-control" id="fileName" placeholder="Insert a name" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pinCode">Secret pin code</label>
-                                            <input type="numer" class="form-control" id="pinCode" placeholder="4 digit pin code" required pattern="\d{4}">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="exampleInputFile">File input</label>
-                                            <input type="file" id="exampleInputFile" required>
-                                        </div>
-                                    </div><!-- /.box-body -->
-                                    <div class="box-footer">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                <?php if(validation_errors() != null) {echo "<div class='alert alert-danger alert-dismissable'>".validation_errors()."</div>";} ?>
+                                <?php echo form_open_multipart('record/createRecord'); ?>
+                                <div class="box-body">
+                                    <div class="form-group">
+                                        <label for="fileName">File name</label>
+                                        <input type="text" class="form-control" id="fileName" name="fileName" placeholder="Insert a name" required>
                                     </div>
-                                </form>
+                                    <div class="form-group">
+                                        <label for="pinCode">Secret pin code</label>
+                                        <input type="numer" class="form-control" id="pinCode" name="pinCode" placeholder="4 digit pin code" required pattern="\d{4}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputFile">File input</label>
+                                        <input type="file" id="inputFile" name="inputFile" >
+                                    </div>
+                                </div><!-- /.box-body -->
+                                <div class="box-footer">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                                <?php echo form_close(); ?>
                             </div><!-- /.box -->
                         </div><!--/.col (left) -->
                     </div>   <!-- /.row -->
