@@ -21,6 +21,9 @@ class Main extends CI_Controller {
 
     public function login() {
         if ($this->session->userdata('logged') == 'true') {
+            $this->load->library('doctrine');
+            $em = $this->doctrine->em;
+            $data['records'] = $em->getRepository('Entity\Record')->findAll();
             $data['user_email'] = $this->config->item('user_email');
             $this->load->view('main/home_view', $data);
         } else {
@@ -30,6 +33,9 @@ class Main extends CI_Controller {
                 $this->load->view('main/login_form');
             } else if($this->isValidUser($this->input->post('email'), $this->input->post('password'))) {
                 $this->session->set_userdata('logged', 'true');
+                $this->load->library('doctrine');
+                $em = $this->doctrine->em;
+                $data['records'] = $em->getRepository('Entity\Record')->findAll();
                 $data['user_email'] = $this->config->item('user_email');
                 $this->load->view('main/home_view', $data);
             } else {
@@ -61,6 +67,9 @@ class Main extends CI_Controller {
     
     public function home() {
         if ($this->session->userdata('logged') == 'true') {
+            $this->load->library('doctrine');
+            $em = $this->doctrine->em;
+            $data['records'] = $em->getRepository('Entity\Record')->findAll();
             $data['user_email'] = $this->config->item('user_email');
             $this->load->view('main/home_view', $data);
         } else {
@@ -70,6 +79,14 @@ class Main extends CI_Controller {
 
     public function showSearch() {
         if ($this->session->userdata('logged') == 'true') {
+            $this->load->library('doctrine');
+            $em = $this->doctrine->em;
+            $data['records'] = $em->getRepository("Entity\Record")->createQueryBuilder('o')
+                ->where('o.name LIKE :searchparam')
+                ->setParameter('searchparam', '%'.$this->input->post('search').'%')
+                ->getQuery()
+                ->getResult();
+            $data['searchParam'] = $this->input->post('search');
             $data['user_email'] = $this->config->item('user_email');
             $this->load->view('main/search_view', $data);
         } else {

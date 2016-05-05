@@ -95,11 +95,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         </div>
                     </div>
                     <!-- search form -->
-                    <form action="#" method="get" class="sidebar-form">
+                    <form action="<?= site_url('main/showSearch') ?>" method="post" class="sidebar-form">
                         <div class="input-group">
-                            <input type="text" name="q" class="form-control" placeholder="Search...">
+                            <input type="text" name="search" class="form-control" placeholder="Search...">
                             <span class="input-group-btn">
-                                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+                                <button type="submit" name="Submit" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
                             </span>
                         </div>
                     </form>
@@ -143,7 +143,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <div class="col-xs-12">
                             <div class="box">
                                 <div class="box-header">
-                                    <h3 class="box-title">Files related to "whatever"</h3>
+                                    <h3 class="box-title">Files related to "<?= $searchParam ?>"</h3>
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
                                     <table id="example2" class="table table-bordered table-hover">
@@ -156,12 +156,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td><a href="<?php echo site_url('record/showRecord'); ?>">Perf</a></td>
-                                                <td>image/jpg</td>
-                                                <td>6.87KB</td>
-                                                <td>04/29/2016</td>
-                                            </tr>
+                                            <?php
+                                            foreach ($records as $record) {
+                                                echo "<tr>";
+                                                    echo "<td><a href='#'>".$record->getName()."</a></td>";
+                                                    echo "<td>".$record->getExtension()."</td>";
+                                                    echo "<td>".$record->getSize()." bytes</td>";
+                                                    echo "<td>".date_format($record->getDateAdded(),"Y/m/d")."</td>";
+                                                echo "</tr>";
+                                            }
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div><!-- /.box-body -->
