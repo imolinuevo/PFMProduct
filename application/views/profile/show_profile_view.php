@@ -151,7 +151,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <h3 class="profile-username text-center"><?= $user_email ?></h3><br>
                                     <ul class="list-group list-group-unbordered">
                                         <li class="list-group-item">
-                                            <b>Saved files</b> <a class="pull-right">1,322</a>
+                                            <b>Saved files</b> <a class="pull-right"><?= $filesCount ?></a>
                                         </li>
                                     </ul>
                                     <a href="<?php echo site_url('record/showCreateRecord'); ?>" class="btn btn-primary btn-block"><b>Upload more files</b></a>
