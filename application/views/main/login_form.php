@@ -33,6 +33,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </div><!-- /.login-logo -->
             <div class="login-box-body">
                 <p class="login-box-msg">Sign in to start your session</p>
+                <?php if(isset($login_error)) {echo "<div class='alert alert-danger alert-dismissable'>".$login_error."</div>";} ?>
                 <?php echo validation_errors(); ?>
                 <?php echo form_open('main/login'); ?>
                 <div class="form-group has-feedback">

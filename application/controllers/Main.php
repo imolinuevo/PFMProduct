@@ -39,7 +39,8 @@ class Main extends CI_Controller {
                 $data['user_email'] = $this->config->item('user_email');
                 $this->load->view('main/home_view', $data);
             } else {
-                $this->load->view('main/login_form');
+                $data['login_error'] = "Invalid data";
+                $this->load->view('main/login_form', $data);
             }
         }
     }

@@ -148,6 +148,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <h3 class="box-title">Upload file</h3>
                                 </div><!-- /.box-header -->
                                 <!-- form start -->
+                                <?php if(isset($create_error)) {echo "<div class='alert alert-danger alert-dismissable'>".$create_error."</div>";} ?>
                                 <?php if(validation_errors() != null) {echo "<div class='alert alert-danger alert-dismissable'>".validation_errors()."</div>";} ?>
                                 <?php echo form_open_multipart('record/createRecord'); ?>
                                 <div class="box-body">

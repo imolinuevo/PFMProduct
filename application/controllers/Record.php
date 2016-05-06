@@ -45,6 +45,7 @@ class Record extends CI_Controller {
                     $data['user_email'] = $this->config->item('user_email');
                     $this->load->view('main/home_view', $data);
                 } else {
+                    $data['create_error'] = "There is already a file with that name.";
                     $data['user_email'] = $this->config->item('user_email');
                     $this->load->view('record/new_record_view', $data);
                 }
