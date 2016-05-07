@@ -34,7 +34,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
             <header class="main-header">
                 <!-- Logo -->
-                <a href="#" class="logo">
+                <a href="<?= site_url('main/home') ?>" class="logo">
                     <!-- mini logo for sidebar mini 50x50 pixels -->
                     <span class="logo-mini"><b>N</b>C</span>
                     <!-- logo for regular state and mobile devices -->
@@ -68,10 +68,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     <!-- Menu Footer-->
                                     <li class="user-footer">
                                         <div class="pull-left">
-                                            <a href="#" class="btn btn-default btn-flat">Profile</a>
+                                            <a href="<?= site_url('profile/showProfile') ?>" class="btn btn-default btn-flat">Profile</a>
                                         </div>
                                         <div class="pull-right">
-                                            <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                            <a href="<?= site_url('main/logout') ?>" class="btn btn-default btn-flat">Sign out</a>
                                         </div>
                                     </li>
                                 </ul>
@@ -108,22 +108,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <ul class="sidebar-menu">
                         <li class="header">MAIN NAVIGATION</li>
                         <li>
-                            <a href="#">
+                            <a href="<?= site_url('main/home') ?>">
                                 <i class="fa fa-database"></i><span>Home</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="<?= site_url('record/showCreateRecord') ?>">
                                 <i class="fa fa-cloud-upload"></i><span>Upload file</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="<?= site_url('profile/showProfile') ?>">
                                 <i class="fa fa-user"></i><span>Profile</span>
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="<?= site_url('main/logout') ?>">
                                 <i class="fa fa-sign-out"></i><span>Sign out</span>
                             </a>
                         </li>
@@ -145,7 +145,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="row">
                         <div class="col-xs-12">
                             <h2 class="page-header">
-                                <i class="fa fa-file"></i> Perf
+                                <i class="fa fa-file"></i> <?= $record->getName() ?>
                             </h2>
                         </div><!-- /.col -->
                     </div>
@@ -162,9 +162,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>image/jpg</td>
-                                        <td>6.87KB</td>
-                                        <td>04/29/2016</td>
+                                        <?php
+                                        echo "<td>".$record->getExtension()."</td>";
+                                        echo "<td>".$record->getSize()." bytes</td>";
+                                        echo "<td>".date_format($record->getDateAdded(),"Y/m/d")."</td>";
+                                        ?>
                                     </tr>
                                 </tbody>
                             </table>

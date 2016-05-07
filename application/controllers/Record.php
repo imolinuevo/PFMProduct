@@ -73,23 +73,31 @@ class Record extends CI_Controller {
         $em->flush();
     }
 
-    public function showRecord() {
+    public function showRecord($recordId) {
         if ($this->session->userdata('logged') == 'true') {
-            if ($this->recordExists()) {
+            if ($this->recordExists($recordId)) {
+                $this->load->library('doctrine');
+                $em = $this->doctrine->em;
+                $data['record'] = $em->getRepository('Entity\Record')->find($recordId);
                 $data['user_email'] = $this->config->item('user_email');
                 $this->load->view('record/show_record_view', $data);
             } else {
-                $data['user_email'] = $this->config->item('user_email');
-                $this->load->view('main/home_view', $data);
+                redirect('/main/home');
             }
         } else {
             $this->load->view('main/login_form');
         }
     }
 
-    private function recordExists() {
-        //TODO
-        return true;
+    private function recordExists($recordId) {
+        $this->load->library('doctrine');
+        $em = $this->doctrine->em;
+        $record = $em->getRepository('Entity\Record')->find($recordId);
+        if($recordId != NULL && $record != NULL) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
