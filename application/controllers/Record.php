@@ -75,7 +75,7 @@ class Record extends CI_Controller {
 
     public function showRecord($recordId) {
         if ($this->session->userdata('logged') == 'true') {
-            if ($this->recordExists($recordId)) {
+            if (isset($recordId) && $this->recordExists($recordId)) {
                 $this->load->library('doctrine');
                 $em = $this->doctrine->em;
                 $data['record'] = $em->getRepository('Entity\Record')->find($recordId);
@@ -100,4 +100,20 @@ class Record extends CI_Controller {
         }
     }
 
+    public function deleteRecord($recordId) {
+        if ($this->session->userdata('logged') == 'true') {
+            if (isset($recordId) && $this->recordExists($recordId)) {
+                $this->load->library('doctrine');
+                $em = $this->doctrine->em;
+                $record = $em->getRepository('Entity\Record')->findOneBy(array('id' => $recordId));
+                $em->remove($record);
+                $em->flush();
+                redirect('/main/home');
+            } else {
+                redirect('/main/home');
+            }
+        } else {
+            $this->load->view('main/login_form');
+        }
+    }
 }

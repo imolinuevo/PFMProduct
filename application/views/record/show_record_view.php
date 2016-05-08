@@ -144,6 +144,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <!-- title row -->
                     <div class="row">
                         <div class="col-xs-12">
+                            <a href="<?= site_url('record/deleteRecord')."/".$record->getId() ?>"><button onclick=" return confirm('Are you sure?');" class="btn btn-danger pull-right"><i class="fa fa-trash"></i> Delete file</button></a>
                             <h2 class="page-header">
                                 <i class="fa fa-file"></i> <?= $record->getName() ?>
                             </h2>
@@ -183,7 +184,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 </div><!-- /.box-body -->
                                 <div class="box-footer">
                                     <button type="submit" class="btn btn-primary"><i class="fa fa-download"></i> Download file</button>
-                                    <button class="btn btn-danger pull-right"><i class="fa fa-trash"></i> Delete file</button>
                                 </div>
                             </form>
                         </div>
