@@ -116,4 +116,30 @@ class Record extends CI_Controller {
             $this->load->view('main/login_form');
         }
     }
+    
+    public function downloadRecord() {
+        
+    }
+    
+    private function transferRecord($record, $pin_code) {
+        $content = $this->parseResult($record, $pin_code);
+        $file_name = $record->getName().".".$record->getExtension();
+        
+        header("Cache-Control: public");
+        header("Content-Description: File Transfer");
+        header("Content-Length: ". filesize("$file_name").";");
+        header("Content-Disposition: attachment; filename=$file_name");
+        header("Content-Type: application/octet-stream; "); 
+        header("Content-Transfer-Encoding: binary");
+
+        echo $content;
+    }
+    
+    private function parseResult($record, $pin_code) {
+        $key = str_pad($pin_code, 32, STR_PAD_RIGHT);
+        require_once('Cipher.php');
+        $myCipher = new Cipher($record->getResult(), $key, base64_decode($record->getVector()));
+        $result = $myCipher->decrypt();
+        return $result;
+    }
 }

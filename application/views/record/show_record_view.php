@@ -178,8 +178,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <form role="form">
                                 <div class="box-body">
                                     <div class="form-group  col-xs-4">
-                                        <label for="pinCode">Secret pin code</label>
-                                        <input type="numer" class="form-control" id="pinCode" placeholder="4 digit pin code" required pattern="\d{4}">
+                                        <label for="pin_code">Secret pin code</label>
+                                        <input type="numer" class="form-control" id="pin_code" name="pin_code" placeholder="4 digit pin code" required pattern="\d{4}">
                                     </div>
                                 </div><!-- /.box-body -->
                                 <div class="box-footer">
