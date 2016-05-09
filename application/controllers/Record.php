@@ -40,10 +40,9 @@ class Record extends CI_Controller {
                     $myCipher = new Cipher($content, $key, null);
                     $result = $myCipher->encrypt();
                     $vector = trim(base64_encode($myCipher->getInitializationVector()));
-                    $record = new Entity\Record($this->input->post('fileName'), $_FILES['inputFile']['type'], $_FILES['inputFile']['size'], new DateTime(), md5(trim(base64_encode($content))), $vector, $result);
+                    $record = new Entity\Record($this->input->post('fileName'), pathinfo($_FILES['inputFile']['name'], PATHINFO_EXTENSION), $_FILES['inputFile']['size'], new DateTime(), md5(trim(base64_encode($content))), $vector, $result);
                     $this->persistRecord($record);
-                    $data['user_email'] = $this->config->item('user_email');
-                    $this->load->view('main/home_view', $data);
+                    redirect('main/home');
                 } else {
                     $data['create_error'] = "There is already a file with that name.";
                     $data['user_email'] = $this->config->item('user_email');
