@@ -162,7 +162,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs">
                                     <li class="active"><a href="#activity" data-toggle="tab">Last uploads</a></li>
-                                    <li><a href="#edit" data-toggle="tab">Edit user profile</a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="active tab-pane" id="activity">
@@ -190,33 +189,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                 </tbody>
                                             </table>
                                         </div><!-- /.box-body -->
-                                    </div><!-- /.tab-pane -->
-                                    <div class="tab-pane" id="edit">
-                                        <form class="form-horizontal">
-                                            <div class="form-group">
-                                                <label for="inputEmail" class="col-sm-2 control-label">Email</label>
-                                                <div class="col-sm-10">
-                                                    <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="inputPassword" class="col-sm-2 control-label">Password</label>
-                                                <div class="col-sm-10">
-                                                    <input type="password" class="form-control" id="inputPaswword" placeholder="Password">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="inputPasswordConfirmation" class="col-sm-2 control-label">Password confirmation</label>
-                                                <div class="col-sm-10">
-                                                    <input type="password" class="form-control" id="inputPasswordConfirmation" placeholder="Password confirmation">
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-sm-offset-2 col-sm-10">
-                                                    <button type="submit" class="btn btn-danger">Submit</button>
-                                                </div>
-                                            </div>
-                                        </form>
                                     </div><!-- /.tab-pane -->
                                 </div><!-- /.tab-content -->
                             </div><!-- /.nav-tabs-custom -->
