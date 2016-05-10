@@ -178,6 +178,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <?php if(isset($pin_error)) {echo "<div class='alert alert-danger alert-dismissable'>".$pin_error."</div>";} ?>
                             <?php if(validation_errors() != null) {echo "<div class='alert alert-danger alert-dismissable'>".validation_errors()."</div>";} ?>
                             <?php echo form_open('record/downloadRecord/'.$record->getId()); ?>
+                            <form role="form">
                                 <div class="box-body">
                                     <div class="form-group  col-xs-4">
                                         <label for="pin_code">Secret pin code</label>
