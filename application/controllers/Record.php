@@ -116,8 +116,33 @@ class Record extends CI_Controller {
         }
     }
     
-    public function downloadRecord() {
-        
+    public function downloadRecord($recordId) {
+        if ($this->session->userdata('logged') == 'true') {
+            $this->form_validation->set_rules('pin_code', 'Pin code', 'required');
+            if ($this->form_validation->run() == FALSE) {
+                $this->showRecord($recordId);
+            } else {
+                if (isset($recordId) && $this->recordExists($recordId)) {
+                    $this->load->library('doctrine');
+                    $em = $this->doctrine->em;
+                    $record = $em->getRepository('Entity\Record')->find($recordId);
+                    if($this->isCorrectPinCode($record, $this->input->post('pin_code'))) {
+                        $this->transferRecord($record, $this->input->post('pin_code'));
+                    } else {
+                        $data['pin_error'] = "Incorrect pin code.";
+                        $this->load->library('doctrine');
+                        $em = $this->doctrine->em;
+                        $data['record'] = $em->getRepository('Entity\Record')->find($recordId);
+                        $data['user_email'] = $this->config->item('user_email');
+                        $this->load->view('record/show_record_view', $data);
+                    }
+                } else {
+                    redirect('/main/home');
+                }
+            }
+        } else {
+            $this->load->view('main/login_form');
+        }
     }
     
     private function transferRecord($record, $pin_code) {
@@ -126,7 +151,7 @@ class Record extends CI_Controller {
         
         header("Cache-Control: public");
         header("Content-Description: File Transfer");
-        header("Content-Length: ". filesize("$file_name").";");
+        header("Content-Length: ".$record->getSize().";");
         header("Content-Disposition: attachment; filename=$file_name");
         header("Content-Type: application/octet-stream; "); 
         header("Content-Transfer-Encoding: binary");
@@ -140,5 +165,14 @@ class Record extends CI_Controller {
         $myCipher = new Cipher($record->getResult(), $key, base64_decode($record->getVector()));
         $result = $myCipher->decrypt();
         return $result;
+    }
+    
+    private function isCorrectPinCode($record, $pin_code) {
+        $hash = md5(trim(base64_encode($this->parseResult($record, $pin_code))));
+        if($hash == $record->getHash()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

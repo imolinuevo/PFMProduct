@@ -175,6 +175,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div><!-- /.row -->
                     <div class="row no-print">
                         <div class="col-xs-12">
+                            <?php if(isset($pin_error)) {echo "<div class='alert alert-danger alert-dismissable'>".$pin_error."</div>";} ?>
+                            <?php if(validation_errors() != null) {echo "<div class='alert alert-danger alert-dismissable'>".validation_errors()."</div>";} ?>
+                            <?php echo form_open('record/downloadRecord/'.$record->getId()); ?>
                             <form role="form">
                                 <div class="box-body">
                                     <div class="form-group  col-xs-4">
@@ -185,7 +188,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                 <div class="box-footer">
                                     <button type="submit" class="btn btn-primary"><i class="fa fa-download"></i> Download file</button>
                                 </div>
-                            </form>
+                            <?php echo form_close(); ?>
                         </div>
                     </div>
                 </section><!-- /.content -->
