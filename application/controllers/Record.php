@@ -40,8 +40,8 @@ class Record extends CI_Controller {
                     $myCipher = new Cipher($content, $key, null);
                     $result = $myCipher->encrypt();
                     $vector = trim(base64_encode($myCipher->getInitializationVector()));
-                    $record = new Entity\Record($this->input->post('fileName'), pathinfo($_FILES['inputFile']['name'], PATHINFO_EXTENSION), $_FILES['inputFile']['size'], new DateTime(), md5(trim(base64_encode($content))), $vector, $result);
-                    $this->persistRecord($record);
+                    $record = new Entity\Record($this->input->post('fileName'), pathinfo($_FILES['inputFile']['name'], PATHINFO_EXTENSION), $_FILES['inputFile']['size'], new DateTime(), md5(trim(base64_encode($content))), $vector);
+                    $this->persistRecord($record, $result);
                     redirect('main/home');
                 } else {
                     $data['create_error'] = "There is already a file with that name.";
@@ -65,11 +65,15 @@ class Record extends CI_Controller {
         }
     }
 
-    private function persistRecord($record) {
+    private function persistRecord($record, $result) {
         $this->load->library('doctrine');
         $em = $this->doctrine->em;
         $em->persist($record);
         $em->flush();
+        $file_path = realpath(FCPATH)."/data/".$record->getName();
+        $handle = fopen($file_path, 'w') or die("can't open file");
+        fwrite($handle, $result);
+        fclose($handle);
     }
 
     public function showRecord($recordId) {
@@ -107,12 +111,19 @@ class Record extends CI_Controller {
                 $record = $em->getRepository('Entity\Record')->findOneBy(array('id' => $recordId));
                 $em->remove($record);
                 $em->flush();
+                $this->deleteFile($record->getName());
                 redirect('/main/home');
             } else {
                 redirect('/main/home');
             }
         } else {
             $this->load->view('main/login_form');
+        }
+    }
+    
+    private function deleteFile($name) {
+        if(file_exists(realpath(FCPATH)."/data/".$name)) {
+            unlink(realpath(FCPATH)."/data/".$name);
         }
     }
     
@@ -160,9 +171,10 @@ class Record extends CI_Controller {
     }
     
     private function parseResult($record, $pin_code) {
+        $content = file_get_contents(realpath(FCPATH)."/data/".$record->getName());
         $key = str_pad($pin_code, 32, STR_PAD_RIGHT);
         require_once('Cipher.php');
-        $myCipher = new Cipher($record->getResult(), $key, base64_decode($record->getVector()));
+        $myCipher = new Cipher($content, $key, base64_decode($record->getVector()));
         $result = $myCipher->decrypt();
         return $result;
     }

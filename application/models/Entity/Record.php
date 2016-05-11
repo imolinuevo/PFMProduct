@@ -47,20 +47,14 @@ class Record {
      * @Column(type="string", length=255, nullable=false)
      */
     protected $vector;
-
-    /**
-     * @Column(type="text", nullable=false)
-     */
-    protected $result;
     
-    public function __construct($name, $extension, $size, $date_added, $hash, $vector, $result) {
+    public function __construct($name, $extension, $size, $date_added, $hash, $vector) {
         $this->name = $name;
         $this->extension = $extension;
         $this->size = $size;
         $this->date_added = $date_added;
         $this->hash = $hash;
         $this->vector = $vector;
-        $this->result = $result;
     }
 
     public function setName($name) {
@@ -93,11 +87,6 @@ class Record {
         return $this;
     }
     
-    public function setResult($result) {
-        $this->result = $result;
-        return $this;
-    }
-    
     public function getId() {
         return $this->id;
     }
@@ -124,9 +113,5 @@ class Record {
     
     public function getVector() {
         return $this->vector;
-    }
-    
-    public function getResult() {
-        return $this->result;
     }
 }
