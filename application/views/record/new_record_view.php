@@ -158,7 +158,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                     <div class="form-group">
                                         <label for="pinCode">Secret pin code</label>
-                                        <input type="numer" class="form-control" id="pinCode" name="pinCode" placeholder="4 digit pin code" required pattern="\d{4}">
+                                        <input type="password" class="form-control" id="pinCode" name="pinCode" placeholder="4 digit pin code" required pattern="\d{4}">
                                     </div>
                                     <div class="form-group">
                                         <label for="inputFile">File input</label>

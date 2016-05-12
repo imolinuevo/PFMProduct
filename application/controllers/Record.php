@@ -32,25 +32,29 @@ class Record extends CI_Controller {
                 $data['user_email'] = $this->config->item('user_email');
                 $this->load->view('record/new_record_view', $data);
             } else {
-                if($this->fileNameIsUnique($this->input->post('fileName'))) {
-                    $this->load->library('doctrine');
-                    $content = file_get_contents($_FILES['inputFile']['tmp_name']);
-                    $key = str_pad($this->input->post('pinCode'), 32, STR_PAD_RIGHT);
-                    require_once('Cipher.php');
-                    $myCipher = new Cipher($content, $key, null);
-                    $result = $myCipher->encrypt();
-                    $vector = trim(base64_encode($myCipher->getInitializationVector()));
-                    $record = new Entity\Record($this->input->post('fileName'), pathinfo($_FILES['inputFile']['name'], PATHINFO_EXTENSION), $_FILES['inputFile']['size'], new DateTime(), md5(trim(base64_encode($content))), $vector);
-                    $this->persistRecord($record, $result);
-                    redirect('main/home');
-                } else {
-                    $data['create_error'] = "There is already a file with that name.";
-                    $data['user_email'] = $this->config->item('user_email');
-                    $this->load->view('record/new_record_view', $data);
-                }
+                $this->validateCreateRecord();
             }
         } else {
             $this->load->view('main/login_form');
+        }
+    }
+    
+    private function validateCreateRecord() {
+        if($this->fileNameIsUnique($this->input->post('fileName'))) {
+            $this->load->library('doctrine');
+            $content = file_get_contents($_FILES['inputFile']['tmp_name']);
+            $key = str_pad($this->input->post('pinCode'), 32, STR_PAD_RIGHT);
+            require_once('Cipher.php');
+            $myCipher = new Cipher($content, $key, null);
+            $result = $myCipher->encrypt();
+            $vector = trim(base64_encode($myCipher->getInitializationVector()));
+            $record = new Entity\Record($this->input->post('fileName'), pathinfo($_FILES['inputFile']['name'], PATHINFO_EXTENSION), $_FILES['inputFile']['size'], new DateTime(), md5(trim(base64_encode($content))), $vector);
+            $this->persistRecord($record, $result);
+            redirect('main/home');
+        } else {
+            $data['create_error'] = "There is already a file with that name.";
+            $data['user_email'] = $this->config->item('user_email');
+            $this->load->view('record/new_record_view', $data);
         }
     }
     
@@ -133,26 +137,30 @@ class Record extends CI_Controller {
             if ($this->form_validation->run() == FALSE) {
                 $this->showRecord($recordId);
             } else {
-                if (isset($recordId) && $this->recordExists($recordId)) {
-                    $this->load->library('doctrine');
-                    $em = $this->doctrine->em;
-                    $record = $em->getRepository('Entity\Record')->find($recordId);
-                    if($this->isCorrectPinCode($record, $this->input->post('pin_code'))) {
-                        $this->transferRecord($record, $this->input->post('pin_code'));
-                    } else {
-                        $data['pin_error'] = "Incorrect pin code.";
-                        $this->load->library('doctrine');
-                        $em = $this->doctrine->em;
-                        $data['record'] = $em->getRepository('Entity\Record')->find($recordId);
-                        $data['user_email'] = $this->config->item('user_email');
-                        $this->load->view('record/show_record_view', $data);
-                    }
-                } else {
-                    redirect('/main/home');
-                }
+                $this->validateDownloadRecord($recordId, $this->input->post('pin_code'));
             }
         } else {
             $this->load->view('main/login_form');
+        }
+    }
+    
+    private function validateDownloadRecord($recordId, $pin_code) {
+        if (isset($recordId) && $this->recordExists($recordId)) {
+            $this->load->library('doctrine');
+            $em = $this->doctrine->em;
+            $record = $em->getRepository('Entity\Record')->find($recordId);
+            if($this->isCorrectPinCode($record, $pin_code)) {
+                $this->transferRecord($record, $pin_code);
+            } else {
+                $data['pin_error'] = "Incorrect pin code.";
+                $this->load->library('doctrine');
+                $em = $this->doctrine->em;
+                $data['record'] = $em->getRepository('Entity\Record')->find($recordId);
+                $data['user_email'] = $this->config->item('user_email');
+                $this->load->view('record/show_record_view', $data);
+            }
+        } else {
+            redirect('/main/home');
         }
     }
     

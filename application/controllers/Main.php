@@ -6,7 +6,7 @@ class Main extends CI_Controller {
 
     function __construct() {
         parent::__construct();
-        if(!$this->session->userdata('logged')) {
+        if (!$this->session->userdata('logged')) {
             $this->session->set_userdata('logged', 'false');
         }
     }
@@ -21,17 +21,13 @@ class Main extends CI_Controller {
 
     public function login() {
         if ($this->session->userdata('logged') == 'true') {
-            $this->load->library('doctrine');
-            $em = $this->doctrine->em;
-            $data['records'] = $em->getRepository('Entity\Record')->findAll();
-            $data['user_email'] = $this->config->item('user_email');
-            $this->load->view('main/home_view', $data);
+            redirect('main/home');
         } else {
             $this->form_validation->set_rules('email', 'Email', 'required');
             $this->form_validation->set_rules('password', 'Password', 'required');
             if ($this->form_validation->run() == FALSE) {
                 $this->load->view('main/login_form');
-            } else if($this->isValidUser($this->input->post('email'), $this->input->post('password'))) {
+            } else if ($this->isValidUser($this->input->post('email'), $this->input->post('password'))) {
                 $this->session->set_userdata('logged', 'true');
                 $this->load->library('doctrine');
                 $em = $this->doctrine->em;
@@ -44,10 +40,10 @@ class Main extends CI_Controller {
             }
         }
     }
-    
+
     private function isValidUser($user_email, $user_password) {
-        if(!empty($this->config->item('user_email')) && !empty($this->config->item('user_password'))){
-            if(($this->config->item('user_email') == $user_email) && ($this->config->item('user_password') == md5($user_password))) {
+        if (!empty($this->config->item('user_email')) && !empty($this->config->item('user_password'))) {
+            if (($this->config->item('user_email') == $user_email) && ($this->config->item('user_password') == md5($user_password))) {
                 return true;
             } else {
                 return false;
@@ -56,16 +52,16 @@ class Main extends CI_Controller {
             return false;
         }
     }
-    
+
     public function logout() {
         if ($this->session->userdata('logged') == 'true') {
             $this->session->set_userdata('logged', 'false');
             $this->load->view('main/login_form');
-        } else { 
+        } else {
             $this->load->view('main/login_form');
         }
     }
-    
+
     public function home() {
         if ($this->session->userdata('logged') == 'true') {
             $this->load->library('doctrine');
@@ -83,10 +79,10 @@ class Main extends CI_Controller {
             $this->load->library('doctrine');
             $em = $this->doctrine->em;
             $data['records'] = $em->getRepository("Entity\Record")->createQueryBuilder('o')
-                ->where('o.name LIKE :searchparam')
-                ->setParameter('searchparam', '%'.$this->input->post('search').'%')
-                ->getQuery()
-                ->getResult();
+                    ->where('o.name LIKE :searchparam')
+                    ->setParameter('searchparam', '%' . $this->input->post('search') . '%')
+                    ->getQuery()
+                    ->getResult();
             $data['searchParam'] = $this->input->post('search');
             $data['user_email'] = $this->config->item('user_email');
             $this->load->view('main/search_view', $data);
@@ -94,4 +90,5 @@ class Main extends CI_Controller {
             $this->load->view('main/login_form');
         }
     }
+
 }
