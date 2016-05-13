@@ -8,10 +8,10 @@ class Cipher {
     private $mode;
     private $initializationVector;
 
-    public function __construct($text, $key, $initializationVector) {
+    public function __construct($data, $key, $initializationVector) {
         $this->cipher = MCRYPT_RIJNDAEL_256;
         $this->key = $key;
-        $this->data = $text;
+        $this->data = $data;
         $this->mode = MCRYPT_MODE_CFB;
         ($initializationVector == null) ? $this->initializationVector = mcrypt_create_iv(mcrypt_get_iv_size($this->cipher, $this->mode), MCRYPT_RAND) : $this->initializationVector = $initializationVector;
     }
