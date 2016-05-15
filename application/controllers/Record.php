@@ -48,7 +48,7 @@ class Record extends CI_Controller {
             $myCipher = new Cipher($content, $key, null);
             $result = $myCipher->encrypt();
             $vector = trim(base64_encode($myCipher->getInitializationVector()));
-            $record = new Entity\Record($this->input->post('fileName'), pathinfo($_FILES['inputFile']['name'], PATHINFO_EXTENSION), $_FILES['inputFile']['size'], new DateTime(), md5(trim(base64_encode($content))), $vector);
+            $record = new Entity\Record($this->input->post('fileName'), pathinfo($_FILES['inputFile']['name'], PATHINFO_EXTENSION), $_FILES['inputFile']['size'], new DateTime(), md5(base64_encode(trim($content))), $vector);
             $this->persistRecord($record, $result);
             redirect('main/home');
         } else {
@@ -188,7 +188,7 @@ class Record extends CI_Controller {
     }
     
     private function isCorrectPinCode($record, $pin_code) {
-        $hash = md5(trim(base64_encode($this->parseResult($record, $pin_code))));
+        $hash = md5(base64_encode(trim($this->parseResult($record, $pin_code))));
         if($hash == $record->getHash()) {
             return true;
         } else {
