@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Neat Cloud | Profile</title>
+        <title>Neat Storm | Profile</title>
         <!-- Tell the browser to be responsive to screen width -->
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <!-- Bootstrap 3.3.5 -->
@@ -36,9 +36,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <!-- Logo -->
                 <a href="<?php echo site_url('main/home'); ?>" class="logo">
                     <!-- mini logo for sidebar mini 50x50 pixels -->
-                    <span class="logo-mini"><b>N</b>C</span>
+                    <span class="logo-mini"><b>N</b>S</span>
                     <!-- logo for regular state and mobile devices -->
-                    <span class="logo-lg"><b>Neat</b>Cloud</span>
+                    <span class="logo-lg"><b>Neat</b>Storm</span>
                 </a>
                 <!-- Header Navbar: style can be found in header.less -->
                 <nav class="navbar navbar-static-top" role="navigation">
@@ -201,7 +201,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <div class="pull-right hidden-xs">
                     <b>Version</b> 1.0.0
                 </div>
-                <strong>Copyright &copy; 2016 <a href="#">Neat Cloud</a>.</strong> All rights reserved.
+                <strong>Copyright &copy; 2016 <a href="#">Neat Storm</a>.</strong> All rights reserved.
             </footer>
         </div><!-- ./wrapper -->
         <!-- jQuery 2.1.4 -->
