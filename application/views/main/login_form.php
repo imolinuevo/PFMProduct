@@ -57,7 +57,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div><!-- /.col -->
                 </div>
                 <?php echo form_close(); ?>
-                <a href="#">I forgot my password</a><br>
             </div><!-- /.login-box-body -->
         </div><!-- /.login-box -->
         <!-- jQuery 2.1.4 -->
