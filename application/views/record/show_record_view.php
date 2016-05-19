@@ -180,8 +180,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <?php echo form_open('record/downloadRecord/'.$record->getId()); ?>
                                 <div class="box-body">
                                     <div class="form-group  col-xs-4">
-                                        <label for="pin_code">Secret pin code</label>
-                                        <input type="password" class="form-control" id="pin_code" name="pin_code" placeholder="4 digit pin code" required pattern="\d{4}">
+                                        <label for="filePassword">Secret file password</label>
+                                        <input type="password" class="form-control" id="pin_code" name="filePassword" placeholder="8 characters at least" required pattern=".{8,}">
                                     </div>
                                 </div><!-- /.box-body -->
                                 <div class="box-footer">

@@ -24,7 +24,7 @@ class Record extends CI_Controller {
     public function createRecord() {
         if ($this->session->userdata('logged') == 'true') {
             $this->form_validation->set_rules('fileName', 'File name', 'required');
-            $this->form_validation->set_rules('pinCode', 'Pin code', 'required|min_length[4]|max_length[4]');
+            $this->form_validation->set_rules('filePassword', 'File password', 'required|min_length[8]|max_length[32]');
             if (empty($_FILES['inputFile']['name'])) {
                 $this->form_validation->set_rules('inputFile', 'Input file', 'required');
             }
@@ -43,7 +43,7 @@ class Record extends CI_Controller {
         if($this->fileNameIsUnique($this->input->post('fileName'))) {
             $this->load->library('doctrine');
             $content = file_get_contents($_FILES['inputFile']['tmp_name']);
-            $key = str_pad($this->input->post('pinCode'), 32, STR_PAD_RIGHT);
+            $key = str_pad($this->input->post('filePassword'), 32, STR_PAD_RIGHT);
             require_once('Cipher.php');
             $myCipher = new Cipher($content, $key, null);
             $result = $myCipher->encrypt();
@@ -133,11 +133,11 @@ class Record extends CI_Controller {
     
     public function downloadRecord($recordId) {
         if ($this->session->userdata('logged') == 'true') {
-            $this->form_validation->set_rules('pin_code', 'Pin code', 'required');
+            $this->form_validation->set_rules('filePassword', 'File password', 'required|min_length[8]|max_length[32]');
             if ($this->form_validation->run() == FALSE) {
                 $this->showRecord($recordId);
             } else {
-                $this->validateDownloadRecord($recordId, $this->input->post('pin_code'));
+                $this->validateDownloadRecord($recordId, $this->input->post('filePassword'));
             }
         } else {
             $this->load->view('main/login_form');
@@ -152,7 +152,7 @@ class Record extends CI_Controller {
             if($this->isCorrectPinCode($record, $pin_code)) {
                 $this->transferRecord($record, $pin_code);
             } else {
-                $data['pin_error'] = "Incorrect pin code.";
+                $data['pin_error'] = "Incorrect password.";
                 $this->load->library('doctrine');
                 $em = $this->doctrine->em;
                 $data['record'] = $em->getRepository('Entity\Record')->find($recordId);
