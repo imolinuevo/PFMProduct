@@ -181,7 +181,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                         echo "<tr>";
                                                             echo "<td><a href='".site_url('record/showRecord')."/".$record->getId()."'>".$record->getName()."</a></td>";
                                                             echo "<td>".$record->getExtension()."</td>";
-                                                            echo "<td>".$record->getSize()." bytes</td>";
+                                                            echo "<td>".$record->getFormattedSize()."bytes</td>";
                                                             echo "<td>".date_format($record->getDateAdded(),"Y/m/d")."</td>";
                                                         echo "</tr>";
                                                     }
