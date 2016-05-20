@@ -29,10 +29,11 @@ class Main extends CI_Controller {
                 $this->load->view('main/login_form');
             } else if ($this->isValidUser($this->input->post('email'), $this->input->post('password'))) {
                 $this->session->set_userdata('logged', 'true');
+                $this->session->set_userdata('email', $this->input->post('email'));
                 $this->load->library('doctrine');
                 $em = $this->doctrine->em;
-                $data['records'] = $em->getRepository('Entity\Record')->findAll();
-                $data['user_email'] = $this->config->item('user_email');
+                $data['records'] = $em->getRepository('Entity\Record')->findBy(array('user_id' => $this->session->userdata('user_id')));
+                $data['user_email'] = $this->session->userdata('email');
                 $this->load->view('main/home_view', $data);
             } else {
                 $data['login_error'] = "Invalid data";
@@ -42,8 +43,12 @@ class Main extends CI_Controller {
     }
 
     private function isValidUser($user_email, $user_password) {
-        if (!empty($this->config->item('user_email')) && !empty($this->config->item('user_password'))) {
-            if (($this->config->item('user_email') == $user_email) && ($this->config->item('user_password') == md5($user_password))) {
+        $this->load->library('doctrine');
+        $em = $this->doctrine->em;
+        $user = $em->getRepository('Entity\User')->findOneBy(array('email' => $user_email));
+        if($user != null) {
+            if($user->getHash() == md5($user_password)) {
+                $this->session->set_userdata('user_id', $user->getId());
                 return true;
             } else {
                 return false;
@@ -66,8 +71,8 @@ class Main extends CI_Controller {
         if ($this->session->userdata('logged') == 'true') {
             $this->load->library('doctrine');
             $em = $this->doctrine->em;
-            $data['records'] = $em->getRepository('Entity\Record')->findAll();
-            $data['user_email'] = $this->config->item('user_email');
+            $data['records'] = $em->getRepository('Entity\Record')->findBy(array('user_id' => $this->session->userdata('user_id')));
+            $data['user_email'] = $this->session->userdata('email');
             $this->load->view('main/home_view', $data);
         } else {
             $this->load->view('main/login_form');
@@ -79,12 +84,13 @@ class Main extends CI_Controller {
             $this->load->library('doctrine');
             $em = $this->doctrine->em;
             $data['records'] = $em->getRepository("Entity\Record")->createQueryBuilder('o')
-                    ->where('o.name LIKE :searchparam')
+                    ->where('o.name LIKE :searchparam AND o.user_id = :user_id')
                     ->setParameter('searchparam', '%' . $this->input->post('search') . '%')
+                    ->setParameter('user_id', $this->session->userdata('user_id'))
                     ->getQuery()
                     ->getResult();
             $data['searchParam'] = $this->input->post('search');
-            $data['user_email'] = $this->config->item('user_email');
+            $data['user_email'] = $this->session->userdata('email');
             $this->load->view('main/search_view', $data);
         } else {
             $this->load->view('main/login_form');

@@ -3,7 +3,7 @@
 namespace Entity;
 
 /**
- * User Record
+ *
  *
  * @Entity
  * @Table(name="record")
@@ -47,14 +47,20 @@ class Record {
      * @Column(type="string", length=255, nullable=false)
      */
     protected $vector;
+    
+    /**
+     * @Column(type="integer", nullable=false)
+     */
+    protected $user_id;
 
-    public function __construct($name, $extension, $size, $date_added, $hash, $vector) {
+    public function __construct($name, $extension, $size, $date_added, $hash, $vector, $user_id) {
         $this->name = $name;
         $this->extension = $extension;
         $this->size = $size;
         $this->date_added = $date_added;
         $this->hash = $hash;
         $this->vector = $vector;
+        $this->user_id = $user_id;
     }
 
     public function setName($name) {
@@ -84,6 +90,11 @@ class Record {
 
     public function setVector($vector) {
         $this->vector = $vector;
+        return $this;
+    }
+    
+    public function setUserId($user_id) {
+        $this->user_id = $user_id;
         return $this;
     }
 
@@ -120,6 +131,10 @@ class Record {
 
     public function getVector() {
         return $this->vector;
+    }
+    
+    public function getUserId() {
+        return $this->user_id;
     }
 
 }
