@@ -159,6 +159,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             </div><!-- /.box -->
                         </div><!-- /.col -->
                         <div class="col-md-9">
+                            <?php if(isset($success)) {echo "<div class='alert alert-success alert-dismissable'>".$success."</div>";} ?>
+                            <?php if(isset($password_error)) {echo "<div class='alert alert-danger alert-dismissable'>".$password_error."</div>";} ?>
+                            <?php echo validation_errors(); ?>
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs">
                                     <li class="active"><a href="#activity" data-toggle="tab">Last uploads</a></li>
@@ -193,7 +196,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         </div><!-- /.box-body -->
                                     </div><!-- /.tab-pane -->
                                     <div class="tab-pane" id="change">
-                                        <form class="form-horizontal">
+                                        <?php echo form_open('profile/updatePassword', 'class=form-horizontal'); ?>
                                             <div class="form-group">
                                                 <label for="inputCurrentPassword" class="col-sm-2 control-label">Current password</label>
                                                 <div class="col-sm-10">
@@ -211,7 +214,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <button type="submit" class="btn btn-danger">Update password</button>
                                                 </div>
                                             </div>
-                                        </form>
+                                        <?php echo form_close(); ?>
                                     </div><!-- /.tab-pane -->
                                     <div class="tab-pane" id="delete">
                                         <form class="form-horizontal">
