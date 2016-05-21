@@ -41,6 +41,18 @@ class Main extends CI_Controller {
             }
         }
     }
+    
+    public function register() {
+        if ($this->session->userdata('logged') == 'true') {
+            redirect('main/home');
+        } else {
+            $this->form_validation->set_rules('email', 'Email', 'required');
+            $this->form_validation->set_rules('password', 'Password', 'required');
+            if ($this->form_validation->run() == FALSE) {
+                $this->load->view('main/register_form');
+            }
+        }
+    }
 
     private function isValidUser($user_email, $user_password) {
         $this->load->library('doctrine');

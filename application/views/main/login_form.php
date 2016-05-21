@@ -57,6 +57,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div><!-- /.col -->
                 </div>
                 <?php echo form_close(); ?>
+                <br>
+                <a href="<?php echo site_url('main/register'); ?>" class="text-center">Register a new account</a>
             </div><!-- /.login-box-body -->
         </div><!-- /.login-box -->
         <!-- jQuery 2.1.4 -->

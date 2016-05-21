@@ -162,11 +162,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <div class="nav-tabs-custom">
                                 <ul class="nav nav-tabs">
                                     <li class="active"><a href="#activity" data-toggle="tab">Last uploads</a></li>
+                                    <li><a href="#change" data-toggle="tab">Change password</a></li>
+                                    <li><a href="#delete" data-toggle="tab">Delete account</a></li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="active tab-pane" id="activity">
                                         <div class="box-body">
-                                            <table class="table table-bordered table-hover">
+                                            <table id="example2" class="table table-bordered table-hover">
                                                 <thead>
                                                     <tr>
                                                         <th>Name</th>
@@ -179,16 +181,58 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <?php
                                                     foreach ($records as $record) {
                                                         echo "<tr>";
-                                                            echo "<td><a href='".site_url('record/showRecord')."/".$record->getId()."'>".$record->getName()."</a></td>";
-                                                            echo "<td>".$record->getExtension()."</td>";
-                                                            echo "<td>".$record->getFormattedSize()."bytes</td>";
-                                                            echo "<td>".date_format($record->getDateAdded(),"Y/m/d")."</td>";
+                                                        echo "<td><a href='" . site_url('record/showRecord') . "/" . $record->getId() . "'>" . $record->getName() . "</a></td>";
+                                                        echo "<td>" . $record->getExtension() . "</td>";
+                                                        echo "<td>" . $record->getFormattedSize() . "bytes</td>";
+                                                        echo "<td>" . date_format($record->getDateAdded(), "Y/m/d") . "</td>";
                                                         echo "</tr>";
                                                     }
                                                     ?>
                                                 </tbody>
                                             </table>
                                         </div><!-- /.box-body -->
+                                    </div><!-- /.tab-pane -->
+                                    <div class="tab-pane" id="change">
+                                        <form class="form-horizontal">
+                                            <div class="form-group">
+                                                <label for="inputCurrentPassword" class="col-sm-2 control-label">Current password</label>
+                                                <div class="col-sm-10">
+                                                    <input name="inputCurrentPassword" type="password" class="form-control" id="inputCurrentPassword" placeholder="Current password" required>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputNewPassword" class="col-sm-2 control-label">New password</label>
+                                                <div class="col-sm-10">
+                                                    <input name="inputNewPassword" type="password" class="form-control" id="inputNewPassword" placeholder="8 characters at least" required  pattern=".{8,}">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-2 col-sm-10">
+                                                    <button type="submit" class="btn btn-danger">Update password</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div><!-- /.tab-pane -->
+                                    <div class="tab-pane" id="delete">
+                                        <form class="form-horizontal">
+                                            <div class="form-group">
+                                                <label for="inputUserPassword" class="col-sm-2 control-label">User password</label>
+                                                <div class="col-sm-10">
+                                                    <input name="inputUserPassword" type="password" class="form-control" id="inputUserPassword" placeholder="User password">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="inputAdminPassword" class="col-sm-2 control-label">Admin password</label>
+                                                <div class="col-sm-10">
+                                                    <input name="inputAdminPassword" type="password" class="form-control" id="inputAdminPassword" placeholder="Admin password">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-offset-2 col-sm-10">
+                                                    <button type="submit" class="btn btn-danger">Submit</button>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div><!-- /.tab-pane -->
                                 </div><!-- /.tab-content -->
                             </div><!-- /.nav-tabs-custom -->
