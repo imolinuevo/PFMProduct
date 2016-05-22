@@ -31,20 +31,22 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <div class="register-logo">
                 <a href="../../index2.html"><b>Neat</b>Storm</a>
             </div>
-
             <div class="register-box-body">
                 <p class="login-box-msg">Register a new user account</p>
-                <form action="../../index.html" method="post">
+                <?php if(isset($success)) {echo "<div class='alert alert-success alert-dismissable'>".$success."</div>";} ?>
+                <?php if(isset($error)) {echo "<div class='alert alert-danger alert-dismissable'>".$error."</div>";} ?>
+                <?php echo validation_errors(); ?>
+                <?php echo form_open('main/register'); ?>
                     <div class="form-group has-feedback">
-                        <input type="email" class="form-control" placeholder="Email" required>
+                        <input name="inputEmail" type="email" class="form-control" placeholder="Email" required>
                         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
-                        <input type="password" class="form-control" placeholder="Password" required>
+                        <input name="inputUserPassword" type="password" class="form-control" placeholder="Password" required>
                         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                     </div>
                     <div class="form-group has-feedback">
-                        <input type="password" class="form-control" placeholder="Admin password" required>
+                        <input name="inputAdminPassword" type="password" class="form-control" placeholder="Admin password" required>
                         <span class="glyphicon glyphicon-user form-control-feedback"></span>
                     </div>
                     <div class="row">
@@ -52,7 +54,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
                         </div><!-- /.col -->
                     </div>
-                </form>
+                <?php echo form_close(); ?>
                 <br>
                 <a href="<?php echo site_url('main/login'); ?>" class="text-center">I already have an account</a>
             </div><!-- /.form-box -->

@@ -150,9 +150,9 @@ class Record extends CI_Controller {
             $em = $this->doctrine->em;
             $record = $em->getRepository('Entity\Record')->find($recordId);
             if ($this->isCorrectPassword($record, $password)) {
-                $this->transferRecord($record, $pin_code);
+                $this->transferRecord($record, $password);
             } else {
-                $data['pin_error'] = "Incorrect password.";
+                $data['password_error'] = "Incorrect password.";
                 $this->load->library('doctrine');
                 $em = $this->doctrine->em;
                 $data['record'] = $em->getRepository('Entity\Record')->find($recordId);
@@ -164,8 +164,8 @@ class Record extends CI_Controller {
         }
     }
 
-    private function transferRecord($record, $pin_code) {
-        $content = $this->parseResult($record, $pin_code);
+    private function transferRecord($record, $password) {
+        $content = $this->parseResult($record, $password);
         $file_name = $record->getName() . "." . $record->getExtension();
 
         header("Cache-Control: public");
@@ -178,9 +178,9 @@ class Record extends CI_Controller {
         echo $content;
     }
 
-    private function parseResult($record, $pin_code) {
+    private function parseResult($record, $password) {
         $content = file_get_contents(realpath(FCPATH) . "/data/" . $record->getName());
-        $key = str_pad($pin_code, 32, STR_PAD_RIGHT);
+        $key = str_pad($password, 32, STR_PAD_RIGHT);
         require_once('Cipher.php');
         $myCipher = new Cipher($content, $key, base64_decode($record->getVector()));
         $result = $myCipher->decrypt();

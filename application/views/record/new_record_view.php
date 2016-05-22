@@ -90,7 +90,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <img src="<?php echo base_url(); ?>assets/dist/img/profile.jpg" class="img-circle" alt="User Image">
                         </div>
                         <div class="pull-left info">
-                            <p><?= $user_email ?></p>
+                            <p></p>
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
                     </div>

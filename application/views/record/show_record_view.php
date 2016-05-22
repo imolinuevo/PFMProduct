@@ -90,7 +90,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <img src="<?php echo base_url(); ?>assets/dist/img/profile.jpg" class="img-circle" alt="User Image">
                         </div>
                         <div class="pull-left info">
-                            <p><?= $user_email ?></p>
+                            <p></p>
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
                     </div>
@@ -175,13 +175,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     </div><!-- /.row -->
                     <div class="row no-print">
                         <div class="col-xs-12">
-                            <?php if(isset($pin_error)) {echo "<div class='alert alert-danger alert-dismissable'>".$pin_error."</div>";} ?>
+                            <?php if(isset($password_error)) {echo "<div class='alert alert-danger alert-dismissable'>".$password_error."</div>";} ?>
                             <?php if(validation_errors() != null) {echo "<div class='alert alert-danger alert-dismissable'>".validation_errors()."</div>";} ?>
                             <?php echo form_open('record/downloadRecord/'.$record->getId()); ?>
                                 <div class="box-body">
                                     <div class="form-group  col-xs-4">
                                         <label for="filePassword">Secret file password</label>
-                                        <input type="password" class="form-control" id="pin_code" name="filePassword" placeholder="8 characters at least" required pattern=".{8,}">
+                                        <input type="password" class="form-control" id="filePassword" name="filePassword" placeholder="8 characters at least" required pattern=".{8,}">
                                     </div>
                                 </div><!-- /.box-body -->
                                 <div class="box-footer">

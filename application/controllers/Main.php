@@ -42,18 +42,6 @@ class Main extends CI_Controller {
         }
     }
     
-    public function register() {
-        if ($this->session->userdata('logged') == 'true') {
-            redirect('main/home');
-        } else {
-            $this->form_validation->set_rules('email', 'Email', 'required');
-            $this->form_validation->set_rules('password', 'Password', 'required');
-            if ($this->form_validation->run() == FALSE) {
-                $this->load->view('main/register_form');
-            }
-        }
-    }
-
     private function isValidUser($user_email, $user_password) {
         $this->load->library('doctrine');
         $em = $this->doctrine->em;
@@ -69,7 +57,50 @@ class Main extends CI_Controller {
             return false;
         }
     }
+    
+    public function register() {
+        if ($this->session->userdata('logged') == 'true') {
+            redirect('main/home');
+        } else {
+            $this->form_validation->set_rules('inputEmail', 'Email', 'required');
+            $this->form_validation->set_rules('inputUserPassword', 'Password', 'required');
+            $this->form_validation->set_rules('inputAdminPassword', 'Password', 'required');
+            if ($this->form_validation->run() == FALSE) {
+                $this->load->view('main/register_form');
+            } else if($this->isValidEmail($this->input->post('inputEmail')) && $this->isValidAdminPassword($this->input->post('inputAdminPassword'))) {
+                $user = new Entity\User($this->input->post('inputEmail'), md5($this->input->post('inputUserPassword')));
+                $this->load->library('doctrine');
+                $em = $this->doctrine->em;
+                $em->persist($user);
+                $em->flush();
+                $data['success'] = "User account created";
+                $this->load->view('main/register_form', $data);
+            } else {
+                $data['error'] = "Invalid data";
+                $this->load->view('main/register_form', $data);
+            }
+        }
+    }
 
+    private function isValidEmail($inputEmail) {
+        $this->load->library('doctrine');
+        $em = $this->doctrine->em;
+        $user = $em->getRepository('Entity\User')->findOneBy(array('email' => $inputEmail));
+        if($user == null) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    private function isValidAdminPassword($inputAdminPassword) {
+        if(md5($inputAdminPassword) == $this->config->item('admin_password')) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
     public function logout() {
         if ($this->session->userdata('logged') == 'true') {
             $this->session->set_userdata('logged', 'false');
