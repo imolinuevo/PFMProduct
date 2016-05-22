@@ -217,7 +217,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         <?php echo form_close(); ?>
                                     </div><!-- /.tab-pane -->
                                     <div class="tab-pane" id="delete">
-                                        <form class="form-horizontal">
+                                        <?php echo form_open('profile/deleteProfile', 'class=form-horizontal'); ?>
                                             <div class="form-group">
                                                 <label for="inputUserPassword" class="col-sm-2 control-label">User password</label>
                                                 <div class="col-sm-10">
@@ -235,7 +235,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                                     <button type="submit" class="btn btn-danger">Submit</button>
                                                 </div>
                                             </div>
-                                        </form>
+                                        <?php echo form_close(); ?>
                                     </div><!-- /.tab-pane -->
                                 </div><!-- /.tab-content -->
                             </div><!-- /.nav-tabs-custom -->
