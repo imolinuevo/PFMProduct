@@ -61,7 +61,7 @@ class Record extends CI_Controller {
     private function fileNameIsUnique($name) {
         $this->load->library('doctrine');
         $em = $this->doctrine->em;
-        $record = $em->getRepository('Entity\Record')->findOneBy(array('name' => $name));
+        $record = $em->getRepository('Entity\Record')->findOneBy(array('name' => $name, 'user_id' => $this->session->userdata('user_id')));
         if ($record == null) {
             return true;
         } else {
@@ -74,7 +74,7 @@ class Record extends CI_Controller {
         $em = $this->doctrine->em;
         $em->persist($record);
         $em->flush();
-        $file_path = realpath(FCPATH) . "/data/" . $record->getName();
+        $file_path = realpath(FCPATH) . "/data/" . $record->getName() . "-" . $record->getId();
         $handle = fopen($file_path, 'w') or die("can't open file");
         fwrite($handle, $result);
         fclose($handle);
@@ -113,9 +113,10 @@ class Record extends CI_Controller {
                 $this->load->library('doctrine');
                 $em = $this->doctrine->em;
                 $record = $em->getRepository('Entity\Record')->findOneBy(array('id' => $recordId));
+                $this->deleteFile($record->getName(), $record->getId());
                 $em->remove($record);
                 $em->flush();
-                $this->deleteFile($record->getName());
+                
                 redirect('/main/home');
             } else {
                 redirect('/main/home');
@@ -125,9 +126,9 @@ class Record extends CI_Controller {
         }
     }
 
-    private function deleteFile($name) {
-        if (file_exists(realpath(FCPATH) . "/data/" . $name)) {
-            unlink(realpath(FCPATH) . "/data/" . $name);
+    private function deleteFile($name, $id) {
+        if (file_exists(realpath(FCPATH) . "/data/" . $name . "-" . $id)) {
+            unlink(realpath(FCPATH) . "/data/" . $name . "-" . $id);
         }
     }
 
@@ -179,7 +180,7 @@ class Record extends CI_Controller {
     }
 
     private function parseResult($record, $password) {
-        $content = file_get_contents(realpath(FCPATH) . "/data/" . $record->getName());
+        $content = file_get_contents(realpath(FCPATH) . "/data/" . $record->getName() . "-" . $record->getId());
         $key = str_pad($password, 32, STR_PAD_RIGHT);
         require_once('Cipher.php');
         $myCipher = new Cipher($content, $key, base64_decode($record->getVector()));
