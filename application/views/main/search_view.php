@@ -36,9 +36,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <!-- Logo -->
                 <a href="<?php echo site_url('main/home'); ?>" class="logo">
                     <!-- mini logo for sidebar mini 50x50 pixels -->
-                    <span class="logo-mini"><b>N</b>S</span>
+                    <span class="logo-mini"><img src="<?php echo base_url(); ?>assets/img/2_CANDADO PLANO.png" style="width: 20px; height: 20px;" alt="logo"/></span>
                     <!-- logo for regular state and mobile devices -->
-                    <span class="logo-lg"><b>Neat</b>Storm</span>
+                    <span class="logo-lg"><img src="<?php echo base_url(); ?>assets/img/2_CANDADO PLANO.png" style="margin-bottom: 8px; width: 20px; height: 20px;" alt="logo"/> <b> Neat </b>Storm</span>
                 </a>
                 <!-- Header Navbar: style can be found in header.less -->
                 <nav class="navbar navbar-static-top" role="navigation">

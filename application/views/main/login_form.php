@@ -29,6 +29,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <body class="hold-transition login-page">
         <div class="login-box">
             <div class="login-logo">
+                <img src="<?php echo base_url(); ?>assets/img/2_CANDADO PLANO.png" style="width: 75px; height: 75px;" alt="logo"/><br>
                 <a href="#"><b>Neat</b>Storm</a>
             </div><!-- /.login-logo -->
             <div class="login-box-body">

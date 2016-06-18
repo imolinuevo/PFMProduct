@@ -29,7 +29,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <body class="hold-transition register-page">
         <div class="register-box">
             <div class="register-logo">
-                <a href="../../index2.html"><b>Neat</b>Storm</a>
+                <img src="<?php echo base_url(); ?>assets/img/2_CANDADO PLANO.png" style="width: 75px; height: 75px;" alt="logo"/><br>
+                <a href="#"><b>Neat</b>Storm</a>
             </div>
             <div class="register-box-body">
                 <p class="login-box-msg">Register a new user account</p>
